@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const userMiddleware = require('../middleware/userMiddleware.js');
 
 JWT_SECRET = "secretpassword";
-const saltRounds = 10;
+
 
 userRouter.post("/signup", async function (req, res) {
     try {
@@ -94,6 +94,12 @@ userRouter.post("/updateprofile", async function (req, res) {
     });
     await updatedProfile.update();
 })
+
+
+
+
+
+
 
 module.exports = {
     userRouter: userRouter
