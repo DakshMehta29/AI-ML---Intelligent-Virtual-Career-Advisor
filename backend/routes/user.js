@@ -95,12 +95,6 @@ userRouter.post("/updateprofile", async function (req, res) {
     await updatedProfile.update();
 })
 
-
-
-
-
-
-
 module.exports = {
     userRouter: userRouter
 };
