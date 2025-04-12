@@ -7,7 +7,9 @@ function Navbar() {
     <nav className="bg-white  ">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Left - Logo */}
-        <div className="text-2xl font-bold text-neutral-900 tracking-tighter">Career-Advisor</div>
+        <a href="/">
+          <div className="text-2xl font-bold text-neutral-900 tracking-tighter">Career-Advisor</div>
+          </a>
 
         {/* Center - Links */}
         <ul className="hidden md:flex  gap-8 text-neutral-700 text-[16px] font-medium">
