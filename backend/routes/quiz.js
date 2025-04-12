@@ -38,7 +38,7 @@ try {
     });
 
     const textResponse = response.data.candidates?.[0]?.content?.parts?.[0]?.text;
-    console.log("Raw Gemini response:\n", textResponse);
+    // console.log("Raw Gemini response:\n", textResponse);
 
     const cleanJSON = (rawText) => {
       return rawText

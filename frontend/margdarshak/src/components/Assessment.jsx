@@ -23,20 +23,36 @@ const Assessment = () => {
     setSkills(updatedSkills);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const finalProfession = profession === "Other" ? customProfession : profession;
-
-    const formData = {
+  
+    const domain = {
       name,
       profession: finalProfession,
       skills,
     };
-
-    console.log("Submitted Assessment Data:", formData);
-    // You can send this data to backend or AI for processing
+  
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/quiz/generatequiz", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ domain }),
+      });
+  
+      const data = await response.json();
+      console.log("Server Response:", data);
+      alert("Assessment submitted successfully!");
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("There was an error submitting the assessment.");
+    }
   };
+  
+  
 
   return (
     <div className="bg-neutral-100 min-h-screen text-neutral-900 px-6 py-10 md:px-20">
