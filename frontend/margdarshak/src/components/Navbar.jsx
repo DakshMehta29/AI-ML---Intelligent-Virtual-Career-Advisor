@@ -17,18 +17,24 @@ function Navbar() {
           >
             Assessment
           </Link></li>
-          <li><a href="/resume" className="tracking-tight hover:text-neutral-400 transition-all duration-300">Resume Tips</a></li>
-          <li><a href="/roadmaps" className="tracking-tight hover:text-neutral-400 transition-all duration-300">Career Roadmaps</a></li>
-          <li><a href="/book-slot" className="tracking-tight hover:text-neutral-400 transition-all duration-300">Book a Slot</a></li>
+          <li><Link to="/resume" className="tracking-tight hover:text-neutral-400 transition-all duration-300">
+          Resume Tips
+          </Link></li>
+          <li><Link to="/roadmaps" className="tracking-tight hover:text-neutral-400 transition-all duration-300">
+          Career Roadmaps
+          </Link></li>
+          <li><Link to="/session" className="tracking-tight hover:text-neutral-400 transition-all duration-300">Book a Slot
+          </Link></li>
         </ul>
 
         {/* Right - Sign In Button */}
         <div>
           <div
-            className="flex bg-neutral-900 tracking-tighter text-white text-[18px] px-4 py-3 rounded-sm hover:bg-neutral-700 transition-all duration-200 gap-1.5 items-center"
-          >
-            Sign Up
-            <GoArrowRight size={22} />
+            className="flex flex-row  bg-neutral-900 tracking-tighter text-white text-[18px] px-4 py-3 rounded-sm hover:bg-neutral-700 transition-all duration-200 gap-1.5 items-center"
+          ><Link to="/sign-up" className='flex gap-1.5 items-center'>
+
+              SignUp <GoArrowRight size={22} />
+            </Link>
           </div>
         </div>
       </div>
