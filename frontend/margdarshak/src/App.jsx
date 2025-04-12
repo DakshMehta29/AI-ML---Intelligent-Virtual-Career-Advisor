@@ -8,6 +8,7 @@ import Roadmaps from './components/Roadmaps';
 import Resume from './components/Resume';
 import Session from './components/Session';
 import Signup from './components/Signup';
+import VideoStream from './components/VideoStream';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Route path="/resume" element={<Resume/>}/>
         <Route path="/sign-up" element={<Signup/>}/>
         <Route path="/session" element={<Session/>}/>
-        
+        <Route path="/stream" element={<VideoStream/>}/>
       </Routes>
       {/* <Chatbot/> */}
       <Footer />
