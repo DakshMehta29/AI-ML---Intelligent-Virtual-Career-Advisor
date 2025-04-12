@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Code,
   Shield,
@@ -9,6 +9,7 @@ import {
   ChevronUp,
   Info
 } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 const roadmaps = [
   {
@@ -196,6 +197,43 @@ const roadmaps = [
       },
     ],
   },
+  {
+    title: "DevOps",
+    icon: <Code className="text-orange-600" />,
+    description: "Master the art of continuous integration, deployment, and infrastructure automation to bridge development and operations.",
+    details: [
+      { 
+        step: "Linux & Scripting", 
+        month: "Month 1",
+        description: "Learn Linux fundamentals and shell scripting. Master command line operations, file systems, and automation scripts."
+      },
+      { 
+        step: "Version Control & CI/CD", 
+        month: "Month 2",
+        description: "Understand Git workflows and CI/CD pipelines. Learn to automate build, test, and deployment processes."
+      },
+      { 
+        step: "Containerization", 
+        month: "Month 3",
+        description: "Master Docker and container orchestration. Learn to containerize applications and manage containerized environments."
+      },
+      { 
+        step: "Infrastructure as Code", 
+        month: "Month 4",
+        description: "Learn Terraform and Ansible. Automate infrastructure provisioning and configuration management."
+      },
+      { 
+        step: "Cloud Platforms", 
+        month: "Month 5",
+        description: "Understand cloud services and deployment. Learn to deploy and manage applications on AWS, Azure, or GCP."
+      },
+      { 
+        step: "Monitoring & Logging", 
+        month: "Month 6",
+        description: "Implement monitoring and logging solutions. Learn to track system performance and troubleshoot issues."
+      },
+    ],
+  },
 ];
 
 const colorClasses = {
@@ -238,6 +276,14 @@ const colorClasses = {
     hover: "hover:bg-green-100",
     icon: "text-green-600",
     desc: "text-green-700"
+  },
+  "DevOps": {
+    bg: "bg-orange-50",
+    border: "border-orange-200",
+    text: "text-orange-800",
+    hover: "hover:bg-orange-100",
+    icon: "text-orange-600",
+    desc: "text-orange-700"
   }
 };
 
@@ -287,6 +333,14 @@ const RoadmapStep = ({ item, index, isLast, colors }) => {
 
 const Roadmap = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check if we have a selected index in the state
+    if (location.state?.selectedIndex !== undefined) {
+      setOpenIndex(location.state.selectedIndex);
+    }
+  }, [location.state]);
 
   const toggleRoadmap = (index) => {
     setOpenIndex(openIndex === index ? null : index);

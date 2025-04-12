@@ -1,18 +1,54 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import { GoArrowRight } from "react-icons/go";
-
-
+import { Code, Shield, BarChart, Server, Brain } from "lucide-react";
 
 const GetStarted = () => {
+  const navigate = useNavigate();
+  
+  const careerPaths = [
+    { 
+      title: "AI & Machine Learning", 
+      icon: <Brain className="text-green-600" size={24} />,
+      index: 4
+    },
+    { 
+      title: "Cybersecurity", 
+      icon: <Shield className="text-red-600" size={24} />,
+      index: 2
+    },
+    { 
+      title: "Web Development", 
+      icon: <Code className="text-blue-600" size={24} />,
+      index: 0
+    },
+    { 
+      title: "Data Science", 
+      icon: <BarChart className="text-purple-600" size={24} />,
+      index: 1
+    },
+    { 
+      title: "Cloud Computing", 
+      icon: <Server className="text-indigo-600" size={24} />,
+      index: 3
+    },
+    { 
+      title: "DevOps", 
+      icon: <Code className="text-orange-600" size={24} />,
+      index: 5
+    },
+  ];
+
+  const handleRoadmapClick = (index) => {
+    navigate('/roadmaps', { state: { selectedIndex: index } });
+  };
+
   return (
     <div className="flex flex-col items-center bg-neutral-50 text-neutral-900 px-6 py-10 md:px-20 space-y-16">
       {/* Hero Section */}
       <div className="flex flex-col items-center text-center mt-48 space-y-4 pb-72 border-b border-neutral-200">
         <div className="text-3xl text-neutral-800 md:text-6xl tracking-tight font-bold">
-          Empowering Your  <span className=" bg-gradient-to-tl
-from-[#c2410c] via-[#f97316] to-[#fdba74] text-transparent bg-clip-text ">Career Journey</span>
+          Empowering Your <span className="bg-gradient-to-tl from-[#c2410c] via-[#f97316] to-[#fdba74] text-transparent bg-clip-text">Career Journey</span>
         </div>
         <p className="text-neutral-400 tracking-tight max-w-2xl text-[16px] mx-auto">
           From assessments to expert guidance, we provide everything you need to
@@ -24,50 +60,27 @@ from-[#c2410c] via-[#f97316] to-[#fdba74] text-transparent bg-clip-text ">Career
         >
           Get Started <GoArrowRight size={24} />
         </Link>
-
       </div>
-      <div className="flex justify-center text-4xl font-semibold tracking-tighter text-neutral-800 ">Careeer Pathways</div>
-      <div className="flex max-w-5xl gap-12">
-        
-        <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
-          <img
-            src="https://www.corpnce.com/wp-content/uploads/2020/05/machine-learning.jpg"
-            alt="Machine Learning"
-            className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
-          />
-          <div className="px-3 py-2">
-            <div className="text-lg tracking-tighter font-semibold text-neutral-800">Machine Learning</div>
+      
+      <div className="flex justify-center text-4xl font-semibold tracking-tighter text-neutral-800">Career Pathways</div>
+      
+      {/* Grid of 6 cards - 3 columns, 2 rows */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl">
+        {careerPaths.map((path, index) => (
+          <div 
+            key={index}
+            onClick={() => handleRoadmapClick(path.index)}
+            className="bg-white rounded-md p-4 hover:shadow-md transition-all duration-300 border border-neutral-200 cursor-pointer hover:scale-105"
+          >
+            <div className="flex items-center gap-3">
+              {path.icon}
+              <div className="text-lg font-medium text-neutral-800">{path.title}</div>
+            </div>
           </div>
-        </div>
-
-        {/* new card */}
-        <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
-          <img
-            src="https://www.theforage.com/blog/wp-content/uploads/2022/12/what-is-cybersecurity.jpg"
-            alt="Machine Learning"
-            className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
-          />
-          <div className="px-3 py-2">
-            <div className="text-lg tracking-tighter font-semibold text-neutral-800">Cyber Security</div>
-          </div>
-        </div>
-         {/* new card */}
-
-         <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
-          <img
-            src="https://codingbytes.com/wp-content/uploads/2022/03/full-stack-web-development.jpg"
-            alt="Machine Learning"
-            className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
-          />
-          <div className="px-3 py-2">
-            <div className="text-lg tracking-tighter font-semibold text-neutral-800">Full-stack Developer</div>
-          </div>
-        </div>
-
-
+        ))}
       </div>
 
-      {/* Footer CTA (Optional) */}
+      {/* Footer CTA */}
       <div className="text-center pt-10 text-sm text-gray-500">
         &copy; {new Date().getFullYear()} Margdarshak. All rights reserved.
       </div>

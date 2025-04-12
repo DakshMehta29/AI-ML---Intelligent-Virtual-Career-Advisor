@@ -3,13 +3,13 @@ import { FaFacebook, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0a1128] text-white px-6 py-10">
+    <footer className="bg-white/95 backdrop-blur-md text-neutral-800 px-6 py-10 shadow-inner">
       {/* Leave a Reply Section */}
       <div className="max-w-7xl mx-auto mb-10">
         <h2 className="text-xl font-semibold mb-4">Leave a Reply:</h2>
         <form className="space-y-4">
           <textarea
-            className="w-full p-3 rounded-md bg-[#1b2a4b] border border-gray-600 text-white"
+            className="w-full p-3 rounded-md bg-neutral-50/80 border border-neutral-200 text-neutral-800 placeholder-neutral-500"
             rows="4"
             placeholder="comment :"
           ></textarea>
@@ -17,14 +17,14 @@ const Footer = () => {
             <label className="block mb-1">Name:</label>
             <input
               type="text"
-              className="w-full p-2 rounded-md bg-[#1b2a4b] border border-gray-600 text-white"
+              className="w-full p-2 rounded-md bg-neutral-50/80 border border-neutral-200 text-neutral-800 placeholder-neutral-500"
             />
           </div>
           <div>
             <label className="block mb-1">Email:</label>
             <input
               type="email"
-              className="w-full p-2 rounded-md bg-[#1b2a4b] border border-gray-600 text-white"
+              className="w-full p-2 rounded-md bg-neutral-50/80 border border-neutral-200 text-neutral-800 placeholder-neutral-500"
             />
           </div>
           <div className="flex items-center">
@@ -33,7 +33,7 @@ const Footer = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white"
+            className="bg-neutral-800 hover:bg-neutral-700 px-4 py-2 rounded text-white transition-all duration-300"
           >
             Post Comment
           </button>
@@ -41,11 +41,11 @@ const Footer = () => {
       </div>
 
       {/* Footer Links */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 border-t border-gray-600 pt-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 border-t border-neutral-200 pt-10">
         {/* Info */}
         <div>
           <h3 className="font-bold text-lg mb-4">Info</h3>
-          <ul className="space-y-2 text-sm text-gray-300">
+          <ul className="space-y-2 text-sm text-neutral-600">
             <li>About Us</li>
             <li>Compressions</li>
             <li>Customers</li>
@@ -57,7 +57,7 @@ const Footer = () => {
         {/* Explore */}
         <div>
           <h3 className="font-bold text-lg mb-4">Explore</h3>
-          <ul className="space-y-2 text-sm text-gray-300">
+          <ul className="space-y-2 text-sm text-neutral-600">
             <li>Free Courses</li>
             <li>Latest Technologies</li>
             <li>Projects</li>
@@ -69,7 +69,7 @@ const Footer = () => {
         {/* Legal */}
         <div>
           <h3 className="font-bold text-lg mb-4">Legal</h3>
-          <ul className="space-y-2 text-sm text-gray-300">
+          <ul className="space-y-2 text-sm text-neutral-600">
             <li>Customer Agreement</li>
             <li>Privacy Policy</li>
             <li>Security</li>
@@ -81,7 +81,7 @@ const Footer = () => {
         {/* Blog Posts and Events */}
         <div>
           <h3 className="font-bold text-lg mb-4">Blog Posts and Events</h3>
-          <p className="text-sm text-gray-300 mb-4">
+          <p className="text-sm text-neutral-600 mb-4">
             Subscribe to our Blogs & Events for a weekly dose of News of Events and Latest
             Technology, Updates, helpful tips.
           </p>
@@ -89,18 +89,18 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Your email"
-              className="p-2 w-full bg-[#1b2a4b] border border-gray-600 rounded-l text-white"
+              className="p-2 w-full bg-neutral-50/80 border border-neutral-200 rounded-l text-neutral-800 placeholder-neutral-500"
             />
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r">
+            <button className="bg-neutral-800 hover:bg-neutral-700 text-white px-4 py-2 rounded-r transition-all duration-300">
               SUBSCRIBE
             </button>
           </div>
           {/* Social Icons */}
-          <div className="flex space-x-4 text-xl text-white">
-            <FaFacebook className="hover:text-blue-500 cursor-pointer" />
-            <FaTwitter className="hover:text-sky-400 cursor-pointer" />
-            <FaLinkedin className="hover:text-blue-400 cursor-pointer" />
-            <FaGithub className="hover:text-gray-400 cursor-pointer" />
+          <div className="flex space-x-4 text-xl text-neutral-600">
+            <FaFacebook className="hover:text-blue-600 cursor-pointer transition-colors duration-300" />
+            <FaTwitter className="hover:text-sky-500 cursor-pointer transition-colors duration-300" />
+            <FaLinkedin className="hover:text-blue-600 cursor-pointer transition-colors duration-300" />
+            <FaGithub className="hover:text-neutral-800 cursor-pointer transition-colors duration-300" />
           </div>
         </div>
       </div>
