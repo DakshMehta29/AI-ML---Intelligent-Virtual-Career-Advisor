@@ -7,11 +7,7 @@ import Assessment from './components/Assessment';
 import Roadmaps from './components/Roadmaps';
 import Resume from './components/Resume';
 import Session from './components/Session';
-<<<<<<< HEAD
-import Chatbot from './components/Chatbot';
-=======
 import Signup from './components/Signup';
->>>>>>> 40ea431c7fb8548881b8021b8dfa7b895c989b7a
 
 function App() {
   return (

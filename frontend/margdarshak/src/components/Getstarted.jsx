@@ -31,7 +31,7 @@ from-[#c2410c] via-[#f97316] to-[#fdba74] text-transparent bg-clip-text ">Career
         
         <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <img
-            src="https://api.deepai.org/job-view-file/852d3247-74e3-461c-851e-bab93e04691a/outputs/output.jpg"
+            src="https://img.freepik.com/free-photo/ai-chip-artificial-intelligence-future-technology-innovation_53876-129780.jpg?uid=R113168692&ga=GA1.1.74170014.1735657278&semt=ais_hybrid&w=740"
             alt="Machine Learning"
             className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
           />
@@ -43,7 +43,7 @@ from-[#c2410c] via-[#f97316] to-[#fdba74] text-transparent bg-clip-text ">Career
         {/* new card */}
         <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <img
-            src="https://api.deepai.org/job-view-file/590c82c1-d157-4951-8da8-334384da38cb/outputs/output.jpg"
+            src="https://img.freepik.com/free-vector/cyber-security-concept_53876-93190.jpg?uid=R113168692&ga=GA1.1.74170014.1735657278&semt=ais_hybrid&w=740"
             alt="Machine Learning"
             className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
           />
