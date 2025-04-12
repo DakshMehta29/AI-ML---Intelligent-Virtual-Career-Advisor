@@ -39,8 +39,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-900 px-4">
-      <div className="w-full max-w-md bg-neutral-800 rounded-xl shadow-lg p-8 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4">
+      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 text-neutral-800">
         <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
@@ -50,7 +50,7 @@ const Signup = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full px-4 py-2 rounded bg-neutral-700 border border-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded bg-neutral-100 border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -62,7 +62,7 @@ const Signup = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="6-12 characters"
-              className="w-full px-4 py-2 rounded bg-neutral-700 border border-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded bg-neutral-100 border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
