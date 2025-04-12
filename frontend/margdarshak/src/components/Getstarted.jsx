@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
+import { GoArrowRight } from "react-icons/go";
 
 const sections = [
   {
@@ -31,61 +32,65 @@ const sections = [
 
 const GetStarted = () => {
   return (
-    <div className="bg-[#0e1629] text-white px-6 py-10 md:px-20 space-y-16">
+    <div className="flex flex-col items-center bg-neutral-50 text-neutral-900 px-6 py-10 md:px-20 space-y-16">
       {/* Hero Section */}
-      <div className="text-center space-y-4 pb-10 border-b border-gray-600">
-        <h1 className="text-3xl md:text-4xl font-bold">
-          Empowering Your Career Journey
-        </h1>
-        <p className="text-gray-300 max-w-2xl mx-auto">
+      <div className="flex flex-col items-center text-center mt-48 space-y-4 pb-72 border-b border-neutral-200">
+        <div className="text-3xl text-neutral-800 md:text-6xl tracking-tight font-bold">
+          Empowering Your  <span className=" bg-gradient-to-tl
+from-[#c2410c] via-[#f97316] to-[#fdba74] text-transparent bg-clip-text ">Career Journey</span>
+        </div>
+        <p className="text-neutral-400 tracking-tight max-w-2xl text-[16px] mx-auto">
           From assessments to expert guidance, we provide everything you need to
           build your dream career — all in one place.
         </p>
         <Link
           to="/get-started"
-          className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm px-5 py-2 rounded-md transition duration-200"
+          className="flex items-center justify-center bg-neutral-900 hover:bg-neutral-700 text-white text-[18px] px-5 py-3 rounded-md transition duration-200 gap-2"
         >
-          Get Started
+          Get Started <GoArrowRight size={24} />
         </Link>
-        <div className="mt-4 animate-bounce text-gray-400">↓</div>
+
       </div>
-
-      {sections.map((sec, index) => (
-        <div
-          key={index}
-          className={`flex flex-col md:flex-row items-stretch justify-between gap-8 py-10 border-b border-gray-600 ${
-            sec.reverse ? "md:flex-row-reverse" : ""
-          }`}
-        >
-          {/* Image */}
-          <div className="flex-shrink-0 w-full md:w-[40%] h-full flex items-center justify-center">
-            <img
-              src={logo}
-              alt="Section Logo"
-              className="rounded-lg shadow-lg object-cover w-full h-full max-h-60 md:max-h-full"
-              loading="lazy"
-            />
-          </div>
-
-          {/* Text Content */}
-          <div className="w-full md:w-[60%] flex flex-col justify-between text-center md:text-left">
-            <div>
-              <h2 className="text-2xl font-semibold mb-3">{sec.title}</h2>
-              <p className="text-base leading-relaxed text-gray-300">
-                {sec.content}
-              </p>
-            </div>
-            <div className="mt-4 flex justify-center md:justify-start">
-              <Link
-                to="/get-started"
-                className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded-md transition duration-200"
-              >
-                Get Started
-              </Link>
-            </div>
+      <div className="flex justify-center text-4xl font-semibold tracking-tighter text-neutral-800 ">Careeer Pathways</div>
+      <div className="flex max-w-5xl gap-12">
+        
+        <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*TpbxEQy4ckB-g31PwUQPlg.png"
+            alt="Machine Learning"
+            className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
+          />
+          <div className="px-3 py-2">
+            <div className="text-lg tracking-tighter font-semibold text-neutral-800">Machine Learning</div>
           </div>
         </div>
-      ))}
+
+        {/* new card */}
+        <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*TpbxEQy4ckB-g31PwUQPlg.png"
+            alt="Machine Learning"
+            className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
+          />
+          <div className="px-3 py-2">
+            <div className="text-lg tracking-tighter font-semibold text-neutral-800">Machine Learning</div>
+          </div>
+        </div>
+         {/* new card */}
+
+         <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*TpbxEQy4ckB-g31PwUQPlg.png"
+            alt="Machine Learning"
+            className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
+          />
+          <div className="px-3 py-2">
+            <div className="text-lg tracking-tighter font-semibold text-neutral-800">Machine Learning</div>
+          </div>
+        </div>
+
+
+      </div>
 
       {/* Footer CTA (Optional) */}
       <div className="text-center pt-10 text-sm text-gray-500">
