@@ -31,7 +31,7 @@ from-[#c2410c] via-[#f97316] to-[#fdba74] text-transparent bg-clip-text ">Career
         
         <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <img
-            src="https://api.deepai.org/job-view-file/852d3247-74e3-461c-851e-bab93e04691a/outputs/output.jpg"
+            src="https://www.corpnce.com/wp-content/uploads/2020/05/machine-learning.jpg"
             alt="Machine Learning"
             className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
           />
@@ -43,7 +43,7 @@ from-[#c2410c] via-[#f97316] to-[#fdba74] text-transparent bg-clip-text ">Career
         {/* new card */}
         <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <img
-            src="https://api.deepai.org/job-view-file/590c82c1-d157-4951-8da8-334384da38cb/outputs/output.jpg"
+            src="https://www.theforage.com/blog/wp-content/uploads/2022/12/what-is-cybersecurity.jpg"
             alt="Machine Learning"
             className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
           />
