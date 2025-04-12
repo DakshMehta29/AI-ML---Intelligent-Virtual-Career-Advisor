@@ -3,63 +3,109 @@ import React, { useState } from "react";
 const skillOptions = ["C", "C++", "Python", "JavaScript", "React", "SQL", "Java", "HTML/CSS"];
 
 const Assessment = () => {
-  const [skills, setSkills] = useState([{ name: "", level: 0 }]);
+  const [skills, setSkills] = useState([{ name: "" }]);
+  const [name, setName] = useState("");
+  const [profession, setProfession] = useState("");
+  const [customProfession, setCustomProfession] = useState("");
 
-  const handleSkillChange = (index, field, value) => {
+  const handleSkillChange = (index, value) => {
     const updatedSkills = [...skills];
-    updatedSkills[index][field] = value;
+    updatedSkills[index].name = value;
     setSkills(updatedSkills);
   };
 
   const addSkill = () => {
-    setSkills([...skills, { name: "", level: 0 }]);
+    setSkills([...skills, { name: "" }]);
+  };
+
+  const removeSkill = (index) => {
+    const updatedSkills = skills.filter((_, i) => i !== index);
+    setSkills(updatedSkills);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Skills submitted:", skills);
-    // You can send this to backend/AI for generating questions
+
+    const finalProfession = profession === "Other" ? customProfession : profession;
+
+    const formData = {
+      name,
+      profession: finalProfession,
+      skills,
+    };
+
+    console.log("Submitted Assessment Data:", formData);
+    // You can send this data to backend or AI for processing
   };
 
   return (
-    <div className="bg-[#0e1629] min-h-screen text-white px-6 py-10 md:px-20">
-      <h1 className="text-2xl md:text-3xl font-semibold mb-6 text-center">Skill Assessment</h1>
+    <div className="bg-neutral-100 min-h-screen text-neutral-900 px-6 py-10 md:px-20">
+      <h1 className="text-2xl md:text-3xl font-semibold mb-8 text-center">Skill Assessment</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
+        <div className="flex flex-col space-y-2">
+          <label className="font-medium">Your Name</label>
+          <input
+            type="text"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="p-2 border rounded bg-white"
+            placeholder="Enter your name"
+          />
+        </div>
+
+        <div className="flex flex-col space-y-2">
+          <label className="font-medium">Your Profession</label>
+          <select
+            required
+            value={profession}
+            onChange={(e) => setProfession(e.target.value)}
+            className="p-2 border rounded bg-white"
+          >
+            <option value="">Select</option>
+            <option value="Student">Student</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Businessman">Businessman</option>
+            <option value="Other">Other</option>
+          </select>
+
+          {profession === "Other" && (
+            <input
+              type="text"
+              placeholder="Please specify your profession"
+              value={customProfession}
+              onChange={(e) => setCustomProfession(e.target.value)}
+              className="p-2 border rounded bg-white"
+            />
+          )}
+        </div>
+
         {skills.map((skill, index) => (
           <div
             key={index}
-            className="bg-[#1e2a47] p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center gap-4"
+            className="bg-white p-4 border rounded shadow-sm flex flex-col md:flex-row items-center gap-4"
           >
             <select
-              className="text-black p-2 rounded w-full md:w-1/2"
+              className="p-2 border rounded w-full"
               value={skill.name}
-              onChange={(e) => handleSkillChange(index, "name", e.target.value)}
+              onChange={(e) => handleSkillChange(index, e.target.value)}
               required
             >
-              <option value="" disabled>
-                Select Skill
-              </option>
+              <option value="">Select Skill</option>
               {skillOptions.map((opt, idx) => (
                 <option key={idx} value={opt}>
                   {opt}
                 </option>
               ))}
             </select>
-
-            <div className="flex flex-col w-full md:w-1/2">
-              <label className="mb-1 text-sm">Skill Level (0 to 5)</label>
-              <input
-                type="range"
-                min="0"
-                max="5"
-                step="1"
-                value={skill.level}
-                onChange={(e) => handleSkillChange(index, "level", e.target.value)}
-                className="w-full"
-              />
-              <span className="text-sm text-gray-300 text-right">Level: {skill.level}</span>
-            </div>
+            <button
+              type="button"
+              onClick={() => removeSkill(index)}
+              className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md"
+            >
+              Remove
+            </button>
           </div>
         ))}
 
@@ -67,7 +113,7 @@ const Assessment = () => {
           <button
             type="button"
             onClick={addSkill}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md"
+            className="bg-neutral-700 hover:bg-neutral-800 text-white px-4 py-2 rounded-md"
           >
             + Add Another Skill
           </button>
@@ -78,7 +124,7 @@ const Assessment = () => {
             type="submit"
             className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md"
           >
-            Submit Skills
+            Submit Assessment
           </button>
         </div>
       </form>
