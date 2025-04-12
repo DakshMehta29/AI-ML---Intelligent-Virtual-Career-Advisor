@@ -31,7 +31,7 @@ from-[#c2410c] via-[#f97316] to-[#fdba74] text-transparent bg-clip-text ">Career
         
         <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <img
-            src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*TpbxEQy4ckB-g31PwUQPlg.png"
+            src="https://api.deepai.org/job-view-file/852d3247-74e3-461c-851e-bab93e04691a/outputs/output.jpg"
             alt="Machine Learning"
             className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
           />
@@ -43,24 +43,24 @@ from-[#c2410c] via-[#f97316] to-[#fdba74] text-transparent bg-clip-text ">Career
         {/* new card */}
         <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <img
-            src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*TpbxEQy4ckB-g31PwUQPlg.png"
+            src="https://api.deepai.org/job-view-file/590c82c1-d157-4951-8da8-334384da38cb/outputs/output.jpg"
             alt="Machine Learning"
             className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
           />
           <div className="px-3 py-2">
-            <div className="text-lg tracking-tighter font-semibold text-neutral-800">Machine Learning</div>
+            <div className="text-lg tracking-tighter font-semibold text-neutral-800">Cyber Security</div>
           </div>
         </div>
          {/* new card */}
 
          <div className="max-w-sm mx-auto bg-neutral-200/40 rounded-md  overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <img
-            src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*TpbxEQy4ckB-g31PwUQPlg.png"
+            src="https://codingbytes.com/wp-content/uploads/2022/03/full-stack-web-development.jpg"
             alt="Machine Learning"
             className="max-w-full h-64 object-cover m-2 rounded-sm overflow-hidden"
           />
           <div className="px-3 py-2">
-            <div className="text-lg tracking-tighter font-semibold text-neutral-800">Machine Learning</div>
+            <div className="text-lg tracking-tighter font-semibold text-neutral-800">Full-stack Developer</div>
           </div>
         </div>
 

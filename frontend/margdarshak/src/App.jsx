@@ -7,7 +7,11 @@ import Assessment from './components/Assessment';
 import Roadmaps from './components/Roadmaps';
 import Resume from './components/Resume';
 import Session from './components/Session';
+<<<<<<< HEAD
 import Chatbot from './components/Chatbot';
+=======
+import Signup from './components/Signup';
+>>>>>>> 40ea431c7fb8548881b8021b8dfa7b895c989b7a
 
 function App() {
   return (
@@ -18,6 +22,7 @@ function App() {
         <Route path="/assessment" element={<Assessment />} />
         <Route path="/roadmaps" element={<Roadmaps/>}/>
         <Route path="/resume" element={<Resume/>}/>
+        <Route path="/sign-up" element={<Signup/>}/>
         <Route path="/session" element={<Session/>}/>
         
       </Routes>
