@@ -1,34 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.jpg";
+
 import { GoArrowRight } from "react-icons/go";
 
-const sections = [
-  {
-    title: "Kickstart Your Career",
-    content:
-      "Start your journey with our smart assessment. Discover your strengths, explore career options, and unlock personalized guidance tailored just for you. Learn what industries suit you best and how you can stand out in the job market.",
-    reverse: false,
-  },
-  {
-    title: "Get Guidance",
-    content:
-      "Talk to industry experts and mentors who’ll guide you with real-world advice to shape your career direction confidently. From resume reviews to mock interviews, get the support you need to grow.",
-    reverse: true,
-  },
-  {
-    title: "Resume Tips",
-    content:
-      "Build a professional resume using best practices and AI suggestions. Learn what recruiters are looking for, tailor your resume for different roles, and boost your chances of getting shortlisted.",
-    reverse: false,
-  },
-  {
-    title: "1-on-1 Session with Experts",
-    content:
-      "Book a session with professionals and receive personalized insights to grow in your chosen field. Clarify your doubts, plan your goals, and receive constructive feedback for improvement.",
-    reverse: true,
-  },
-];
+
 
 const GetStarted = () => {
   return (
