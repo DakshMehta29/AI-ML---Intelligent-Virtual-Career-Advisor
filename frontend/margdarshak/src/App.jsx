@@ -7,6 +7,7 @@ import Assessment from './components/Assessment';
 import Roadmaps from './components/Roadmaps';
 import Resume from './components/Resume';
 import Session from './components/Session';
+import Chatbot from './components/Chatbot';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/session" element={<Session/>}/>
         
       </Routes>
+      {/* <Chatbot/> */}
       <Footer />
     </div>
   );

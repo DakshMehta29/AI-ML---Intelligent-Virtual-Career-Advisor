@@ -25,7 +25,7 @@ function Navbar() {
         {/* Right - Sign In Button */}
         <div>
           <div
-            className="flex bg-neutral-900 tracking-tighter text-white text-[18px] px-4 py-3 rounded-sm hover:bg-neutral-700 transition-all duration-200 gap-1.5 items-center"
+            className="flex bg-neutral-900 tracking-tighter text-white text-[18px] px-4 py-2 rounded-sm hover:bg-neutral-700 transition-all duration-200 gap-1.5 items-center"
           >
             Sign Up
             <GoArrowRight size={22} />
