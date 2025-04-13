@@ -48,6 +48,4 @@ careerRouter.post('/careeradvice', async (req, res) => {
   res.json({ advice });
 });
 
-module.exports = {
-  careerRouter
-};
+module.exports = careerRouter;

@@ -1,147 +1,233 @@
-import { useState , useEffect , useRef } from "react";
-import { motion } from "framer-motion";
-import axios from "axios";
-import { CiMinimize1 } from "react-icons/ci";
-import { LuSend } from "react-icons/lu";
-import { SiPerplexity } from "react-icons/si";
+import React, { useState, useRef, useEffect } from 'react';
 
-
-
-const API_KEY = import.meta.env.VITE_API_KEY; // Replace with your actual API key
+import { LuSend } from 'react-icons/lu';
+import { IoMdClose } from 'react-icons/io';
+import { BsArrowLeft, BsSearch } from 'react-icons/bs';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const Chatbot = () => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [showWelcome, setShowWelcome] = useState(true);
-  const chatRef = useRef(null);
-  
+  const [messages, setMessages] = useState([
+    {
+      role: 'assistant',
+      content: `# Welcome to Career Assessment Assistant! 👋
+
+I'm here to help you evaluate your skills and suggest career paths. Here's what I can do:
+
+1. **Skill Assessment**: Evaluate your current skills and knowledge
+2. **Career Suggestions**: Recommend career paths based on your skills
+3. **Learning Resources**: Provide resources to improve your skills
+4. **Quiz Generation**: Create personalized quizzes to test your knowledge
+5. **Web Search**: Find up-to-date information about careers and skills
+
+What would you like to start with?`
+    }
+  ]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(() => {
-    if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight;
-    }
+    scrollToBottom();
   }, [messages]);
-  
 
-  const fetchChatResponse = async (message) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+
+    const userMessage = input.trim();
+    setInput('');
+    setIsLoading(true);
+
+    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+
     try {
-      const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${API_KEY}`,
-        {
-          contents: [
-            { role: "user", parts: [{ text: "You are an assistant for students to assist them with providing factual data and resources restrict yourself from answering unethical questions and insult regarding our college ssit . Answer in about 8 to 9 sentences." }] },
-            { role: "user", parts: [{ text: message }] }
-          ],
-        }
-      );
-      return (
-        response.data.candidates?.[0]?.content?.parts?.[0]?.text ||
-        "Sorry, I couldn't fetch a response."
-      );
+      const response = await fetch('http://localhost:3001/api/v1/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: userMessage }),
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || `HTTP error! status: ${response.status}`);
+      }
+
+      setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
+      setSearchResults(data.searchResults || []);
     } catch (error) {
-      console.error("Error fetching chatbot response:", error);
-      return "There was an error. Please try again later.";
-    }
-  };
-
-  const handleSend = async () => {
-    if (!input.trim()) return;
-
-    const userMessage = { text: input, sender: "user" };
-    setMessages([...messages, userMessage]);
-
-    const botResponse = await fetchChatResponse(input);
-    const botMessage = { text: botResponse, sender: "bot" };
-
-    setMessages((prev) => [...prev, botMessage]);
-    setInput("");
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSend();
+      console.error('Chat error:', error);
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: 'Sorry, I encountered an error. Please try again.' 
+      }]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex  justify-center w-full fixed bottom-2 right-2 sm:bottom-6 sm:right-6">
-      {!isOpen ? (
-        
-        <motion.div
-        
-          onClick={() => setIsOpen(true)}
-          className="max-w-[48px] w-full h-12 absolute bottom-0 right-0 bg-neutral-100 text-neutral-900 border-[1px] border-neutral-200 rounded-full  font-semibold flex items-center justify-center  shadow-sm hover:bg-neutral-200 transition-colors duration-300 cursor-pointer font-inter"
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          exit={{ width: 0, opacity: 0, x: 50 }}
-          
-          transition={{ type: "spring", stiffness: 100 }}
-        >
-         <SiPerplexity  className="text-neutral-900"size={20}/>
-         
-        </motion.div>
-        
-      ) : (
-        <motion.div
-          className="max-w-[358px] absolute bottom-0 right-0 bg-neutral-100 text-neutral-900 font-inter border-[1px] border-neutral-200 shadow-lg rounded-xl overflow-hidden"
-          initial={{ opacity: 0, width: 0, x:50 }}
-          animate={{ opacity: 1, width: "24rem" , x:0 }}
-          exit={{ opacity: 0, width: 0, x:50 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          style={{overflow: "hidden"}}
-        >
-          <div className="bg-neutral-100 text-neutral-900 font-inter p-2 flex justify-between items-center font-semibold">
-            <span className="p-2 text-orange-600"><SiPerplexity size={18}/></span>
-            <div onClick={() => { setIsOpen(false); setShowWelcome(true); }}
-                className="text-neutral-900  font-inter hover:scale-[112%] transition-all duration-300 cursor-pointer  p-2 rounded-md"><CiMinimize1 size={18}/></div>
-          </div>
-          <div ref={chatRef} className="p-3 h-64 overflow-y-auto space-y-2">
-          {showWelcome && (
-              <motion.div
-                className="text-xl font-semibold font-inter tracking-tighter text-neutral-900 p-2 cursor-default select-none"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-               <span className="text-orange-600"> Hi! </span> I'm your study assistant. Ask me anything about your subjects .
-              </motion.div>
-            )}
-            {messages.map((msg, index) => (
-              <motion.div
-                key={index}
-                className={`flex flex-col gap-1 p-2 rounded-lg max-w-[80%] font-inter text-[12px]  ${
-                  msg.sender === "user" ? "bg-neutral-900 text-neutral-50 ml-auto w-fit " : "bg-neutral-200/40 text-neutral-800"
-                }`}
-                initial={{ opacity: 0, x: msg.sender === "user" ? 50 : -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                
-                {msg.text}
-              </motion.div>
-            ))}
-          </div>
-          <div className="flex items-center border-t border-neutral-200 font-poppins p-2">
-            <input
-              type="text"
-              className="flex-grow p-2 border border-neutral-200 placeholder:tracking-tighter placeholder:text-sm   rounded-md bg-neutral-50 text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-900"
-              placeholder="Ask a study question..."
-              value={input}
-              onChange={(e) => {
-                setInput(e.target.value);
-                if (showWelcome) setShowWelcome(false);
-              }}
-              onKeyDown={handleKeyDown}
-            />
-            <div
-              onClick={handleSend}
-              className="ml-2 cursor-pointer select-none flex gap-2 items-center bg-neutral-900 px-3 py-[10px] tracking-tighter text-sm rounded-md text-white hover:bg-neutral-800 font-inter "
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => window.history.back()}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
-              Send<LuSend/>
+              <BsArrowLeft size={20} className="text-gray-600" />
+            </button>
+            <div className="flex items-center gap-2">
+            
+              <span className="text-xl font-semibold text-gray-800">Career Assessment</span>
             </div>
           </div>
-        </motion.div>
-      )}
+          <button
+            onClick={() => window.history.back()}
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <IoMdClose size={20} className="text-gray-600" />
+          </button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          {/* Messages */}
+          <div className="h-[calc(100vh-200px)] overflow-y-auto p-6 space-y-6">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-[80%] rounded-2xl p-4 ${
+                    message.role === 'user'
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-50 text-gray-800'
+                  }`}
+                >
+                  {message.role === 'user' ? (
+                    message.content
+                  ) : (
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        code({ node, inline, className, children, ...props }) {
+                          const match = /language-(\w+)/.exec(className || '');
+                          return !inline && match ? (
+                            <SyntaxHighlighter
+                              style={vscDarkPlus}
+                              language={match[1]}
+                              PreTag="div"
+                              {...props}
+                            >
+                              {String(children).replace(/\n$/, '')}
+                            </SyntaxHighlighter>
+                          ) : (
+                            <code className={className} {...props}>
+                              {children}
+                            </code>
+                          );
+                        },
+                        h1: ({ children }) => <h1 className="text-2xl font-bold mb-4">{children}</h1>,
+                        h2: ({ children }) => <h2 className="text-xl font-semibold mb-3">{children}</h2>,
+                        h3: ({ children }) => <h3 className="text-lg font-semibold mb-2">{children}</h3>,
+                        p: ({ children }) => <p className="mb-4">{children}</p>,
+                        ul: ({ children }) => <ul className="list-disc pl-6 mb-4">{children}</ul>,
+                        ol: ({ children }) => <ol className="list-decimal pl-6 mb-4">{children}</ol>,
+                        li: ({ children }) => <li className="mb-1">{children}</li>,
+                        blockquote: ({ children }) => (
+                          <blockquote className="border-l-4 border-gray-300 pl-4 italic my-4">
+                            {children}
+                          </blockquote>
+                        ),
+                        a: ({ href, children }) => (
+                          <a href={href} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
+                            {children}
+                          </a>
+                        ),
+                        strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                        em: ({ children }) => <em className="italic">{children}</em>,
+                      }}
+                    >
+                      {message.content}
+                    </ReactMarkdown>
+                  )}
+                </div>
+              </div>
+            ))}
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-gray-50 text-gray-800 rounded-2xl p-4">
+                  <div className="flex space-x-2">
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100" />
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200" />
+                  </div>
+                </div>
+              </div>
+            )}
+            {searchResults.length > 0 && (
+              <div className="mt-6 border-t border-gray-200 pt-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <BsSearch className="text-gray-600" />
+                  <h3 className="text-lg font-semibold text-gray-800">Search Results</h3>
+                </div>
+                <div className="space-y-4">
+                  {searchResults.map((result, index) => (
+                    <div key={index} className="bg-gray-50 rounded-xl p-4">
+                      <a
+                        href={result.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline font-medium"
+                      >
+                        {result.title}
+                      </a>
+                      <p className="text-gray-600 mt-2">{result.snippet}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input */}
+          <div className="border-t border-gray-200 p-4 bg-white">
+            <form onSubmit={handleSubmit} className="flex gap-3">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask about career assessment..."
+                className="flex-1 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-800 placeholder-gray-400"
+                disabled={isLoading}
+              />
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="bg-blue-500 text-white p-3 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 flex items-center justify-center transition-colors"
+              >
+                <LuSend size={20} />
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

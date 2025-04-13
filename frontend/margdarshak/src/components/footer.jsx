@@ -4,41 +4,7 @@ import { FaFacebook, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
 const Footer = () => {
   return (
     <footer className="bg-white/95 backdrop-blur-md text-neutral-800 px-6 py-10 shadow-inner">
-      {/* Leave a Reply Section */}
-      <div className="max-w-7xl mx-auto mb-10">
-        <h2 className="text-xl font-semibold mb-4">Leave a Reply:</h2>
-        <form className="space-y-4">
-          <textarea
-            className="w-full p-3 rounded-md bg-neutral-50/80 border border-neutral-200 text-neutral-800 placeholder-neutral-500"
-            rows="4"
-            placeholder="comment :"
-          ></textarea>
-          <div>
-            <label className="block mb-1">Name:</label>
-            <input
-              type="text"
-              className="w-full p-2 rounded-md bg-neutral-50/80 border border-neutral-200 text-neutral-800 placeholder-neutral-500"
-            />
-          </div>
-          <div>
-            <label className="block mb-1">Email:</label>
-            <input
-              type="email"
-              className="w-full p-2 rounded-md bg-neutral-50/80 border border-neutral-200 text-neutral-800 placeholder-neutral-500"
-            />
-          </div>
-          <div className="flex items-center">
-            <input type="checkbox" id="saveInfo" className="mr-2" />
-            <label htmlFor="saveInfo">Save my Name and Email for later</label>
-          </div>
-          <button
-            type="submit"
-            className="bg-neutral-800 hover:bg-neutral-700 px-4 py-2 rounded text-white transition-all duration-300"
-          >
-            Post Comment
-          </button>
-        </form>
-      </div>
+      
 
       {/* Footer Links */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 border-t border-neutral-200 pt-10">

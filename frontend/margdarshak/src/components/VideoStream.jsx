@@ -10,6 +10,8 @@ const VideoStream = () => {
   const [error, setError] = useState(null);
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoOff, setIsVideoOff] = useState(false);
+  const [channelName, setChannelName] = useState('test');
+  const [isLoading, setIsLoading] = useState(false);
   const client = useRef(null);
 
   // TODO: Replace these with your actual Agora credentials
@@ -18,8 +20,7 @@ const VideoStream = () => {
   // 3. Get the App ID from Project Management > Project List
   // 4. Generate a temporary token for testing
   const appId = '358bfbea39b4492dbe7b72973fc96129'; // Your App ID from Agora Console
-  const token = '007eJxTYNhwP7HigK+e6x8mrvg1uevNsxTMZC7NVX7/fIUC+3qv69cVGIxNLZLSklITjS2TTEwsjVKSUs2TzI0szY3Tki3NDI0sp87+ld4QyMjw3eYWKyMDBIL4PAwlqcUluskZiXl5qTkMDABVVyM7'; // Your temporary token
-  const channel = 'test-channel';
+  const token = '007eJxTYPB+LcN5lpux5vzbcxlfzb9dvu1xO8K/KHB6ZwjngYmzMxIVGIxNLZLSklITjS2TTEwsjVKSUs2TzI0szY3Tki3NDI0s61b8Sm8IZGTgn/SMlZEBAkF8HoaS1OISheSMxLy81BwGBgCwByPH'; // Your temporary token
 
   useEffect(() => {
     if (!appId) {
@@ -69,11 +70,20 @@ const VideoStream = () => {
   const joinChannel = async () => {
     try {
       if (!appId) {
-        throw new Error('App ID is required');
+        setError('Please add your Agora App ID to the component');
+        return;
       }
 
+      if (!channelName.trim()) {
+        setError('Please enter a channel name');
+        return;
+      }
+
+      setIsLoading(true);
+      setError(null);
+
       // Join the channel
-      await client.current.join(appId, channel, token, null);
+      await client.current.join(appId, channelName, token, null);
 
       // Create and publish local tracks
       const videoTrack = await AgoraRTC.createCameraVideoTrack();
@@ -84,10 +94,11 @@ const VideoStream = () => {
 
       await client.current.publish([videoTrack, audioTrack]);
       setIsJoined(true);
-      setError(null);
     } catch (error) {
       console.error('Error joining channel:', error);
       setError(`Error joining channel: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -110,72 +121,99 @@ const VideoStream = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Live Streaming</h1>
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold mb-2">Video Conference</h1>
+          <p className="text-gray-400">Join a video conference room</p>
+        </div>
         
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+          <div className="bg-red-500/20 border border-red-500 text-red-200 px-4 py-3 rounded-lg mb-4" role="alert">
             <span className="block sm:inline">{error}</span>
           </div>
         )}
 
-        {!appId && (
-          <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-4" role="alert">
-            <span className="block sm:inline">
-              Please add your Agora App ID and token to the component. You can get these from the Agora Console.
-            </span>
-          </div>
-        )}
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Local video */}
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-2">You</h2>
-            {localVideoTrack && (
-              <div
-                ref={(ref) => {
-                  if (ref) {
-                    localVideoTrack.play(ref);
-                  }
-                }}
-                className="w-full h-64 rounded-lg"
-              />
-            )}
-          </div>
-
-          {/* Remote videos */}
-          {remoteUsers.map((user) => (
-            <div key={user.uid} className="bg-white p-4 rounded-lg shadow">
-              <h2 className="text-xl font-semibold mb-2">User {user.uid}</h2>
-              <div
-                ref={(ref) => {
-                  if (ref && user.videoTrack) {
-                    user.videoTrack.play(ref);
-                  }
-                }}
-                className="w-full h-64 rounded-lg"
-              />
+        {!isJoined ? (
+          <div className="flex flex-col items-center gap-6">
+            <div className="bg-gray-800/50 p-6 rounded-xl shadow-lg max-w-md w-full">
+              <h2 className="text-xl font-semibold mb-4">Join Channel</h2>
+              <div className="mb-4">
+                <label htmlFor="channelName" className="block text-sm font-medium text-gray-300 mb-2">
+                  Channel Name
+                </label>
+                <input
+                  type="text"
+                  id="channelName"
+                  value={channelName}
+                  onChange={(e) => setChannelName(e.target.value)}
+                  placeholder="Enter channel name"
+                  className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none text-white"
+                />
+              </div>
+              <button
+                onClick={joinChannel}
+                disabled={isLoading || !channelName.trim()}
+                className={`w-full py-3 px-4 rounded-lg font-medium ${
+                  isLoading || !channelName.trim()
+                    ? 'bg-gray-600 cursor-not-allowed'
+                    : 'bg-blue-600 hover:bg-blue-700'
+                } text-white transition-colors`}
+              >
+                {isLoading ? 'Joining...' : 'Join Channel'}
+              </button>
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {/* Local video */}
+              <div className="bg-gray-800/50 p-4 rounded-xl shadow-lg">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold">You</h2>
+                  <div className="flex gap-2">
+                    <span className={`px-2 py-1 rounded text-sm ${isMuted ? 'bg-red-500' : 'bg-green-500'}`}>
+                      {isMuted ? 'Muted' : 'Unmuted'}
+                    </span>
+                    <span className={`px-2 py-1 rounded text-sm ${isVideoOff ? 'bg-red-500' : 'bg-green-500'}`}>
+                      {isVideoOff ? 'Video Off' : 'Video On'}
+                    </span>
+                  </div>
+                </div>
+                {localVideoTrack && (
+                  <div
+                    ref={(ref) => {
+                      if (ref) {
+                        localVideoTrack.play(ref);
+                      }
+                    }}
+                    className="w-full aspect-video rounded-lg bg-gray-900"
+                  />
+                )}
+              </div>
 
-        <div className="mt-6 flex gap-4 justify-center">
-          {!isJoined ? (
-            <button
-              onClick={joinChannel}
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
-              disabled={!appId}
-            >
-              Join Channel
-            </button>
-          ) : (
-            <>
+              {/* Remote videos */}
+              {remoteUsers.map((user) => (
+                <div key={user.uid} className="bg-gray-800/50 p-4 rounded-xl shadow-lg">
+                  <h2 className="text-xl font-semibold mb-4">User {user.uid}</h2>
+                  <div
+                    ref={(ref) => {
+                      if (ref && user.videoTrack) {
+                        user.videoTrack.play(ref);
+                      }
+                    }}
+                    className="w-full aspect-video rounded-lg bg-gray-900"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="fixed bottom-8 left-0 right-0 flex justify-center gap-4">
               <button
                 onClick={toggleMute}
-                className={`px-4 py-2 rounded-lg flex items-center gap-2 ${
+                className={`px-6 py-3 rounded-lg flex items-center gap-2 ${
                   isMuted ? 'bg-red-500' : 'bg-green-500'
-                } text-white hover:bg-opacity-90`}
+                } text-white hover:bg-opacity-90 transition-colors`}
               >
                 {isMuted ? (
                   <>
@@ -196,9 +234,9 @@ const VideoStream = () => {
 
               <button
                 onClick={toggleVideo}
-                className={`px-4 py-2 rounded-lg flex items-center gap-2 ${
+                className={`px-6 py-3 rounded-lg flex items-center gap-2 ${
                   isVideoOff ? 'bg-red-500' : 'bg-green-500'
-                } text-white hover:bg-opacity-90`}
+                } text-white hover:bg-opacity-90 transition-colors`}
               >
                 {isVideoOff ? (
                   <>
@@ -219,13 +257,13 @@ const VideoStream = () => {
 
               <button
                 onClick={leaveChannel}
-                className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600"
+                className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors"
               >
                 Leave Channel
               </button>
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

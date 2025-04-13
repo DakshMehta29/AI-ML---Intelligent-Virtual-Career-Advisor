@@ -43,6 +43,10 @@ const GetStarted = () => {
     navigate('/roadmaps', { state: { selectedIndex: index } });
   };
 
+  const handleGetStarted = () => {
+    navigate('/assessment');
+  };
+
   return (
     <div className="flex flex-col items-center bg-neutral-50 text-neutral-900 px-6 py-10 md:px-20 space-y-16">
       {/* Hero Section */}
@@ -54,12 +58,12 @@ const GetStarted = () => {
           From assessments to expert guidance, we provide everything you need to
           build your dream career — all in one place.
         </p>
-        <Link
-          to="/get-started"
+        <button
+          onClick={handleGetStarted}
           className="flex items-center justify-center bg-neutral-900 hover:bg-neutral-700 text-white text-[18px] px-5 py-3 rounded-md transition duration-200 gap-2"
         >
           Get Started <GoArrowRight size={24} />
-        </Link>
+        </button>
       </div>
       
       <div className="flex justify-center text-4xl font-semibold tracking-tighter text-neutral-800">Career Pathways</div>
